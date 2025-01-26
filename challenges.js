@@ -169,11 +169,11 @@ class EVCl extends CarCl {
     this.#charge = charge
   }
 
-  chargeBattery = function (chargeTo) {
+  chargeBattery (chargeTo) {
     this.#charge = chargeTo
     return this
   }
-  accelerate = function () {
+  accelerate () {
     this.speed += 20
     this.#charge--
     console.log(
@@ -192,3 +192,6 @@ rivian.accelerate().
   accelerate()
 
 console.log(rivian.speedUS)
+const tesla = new EVCl('Tesla', 100, 50);
+
+console.log(rivian.accelerate === tesla.accelerate);
