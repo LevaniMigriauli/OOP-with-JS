@@ -276,6 +276,7 @@ martha.calcAge()
 ///////////////////////////////////////
 // Inheritance Between 'Classes': Object.create
 
+/*
 const PersonProto = {
   calcAge () {
     console.log(2037 - this.birthYear)
@@ -303,3 +304,77 @@ const jay = Object.create(StudentProto)
 jay.init('Jay', 2010, 'Computer Science')
 jay.introduce()
 jay.calcAge()
+ */
+
+///////////////////////////////////////
+// Encapsulation: Private Class Fields and Methods
+
+// 1) Public fields (we can think of fields as property that will be on all the class instances(public instance field), but not on the prototype, these fields will not get inherited unlike methods that will be added to the prototype for instances to inherit them)
+// 2) Private fields (allow us to implement encapsulation)
+// 3) Public methods
+// 4) Private methods
+// STATIC version of these 4
+class Account {
+  // Public fields
+  locale = navigator.language
+  bank = 'Bankist'
+  // Private fields
+  #movements = []
+  #pin
+
+  constructor (owner, currency, pin) {
+    this.owner = owner
+    this.currency = currency
+    this.#pin = pin
+    // this.movements = []
+    // this.locale = navigator.language
+
+    console.log(`Thanks for opening an account, ${owner}`)
+  }
+
+  // Public interface (API)
+  getMovements () {
+    return this.#movements
+  }
+
+  deposit (val) {
+    this.#movements.push(val)
+  }
+
+  withdrawal (val) {
+    this.deposit(-val)
+  }
+
+  // Internal method, needs to be accessible only for requestLoan, not outside of Account
+  #approveLoan (val) {
+    // Fake method
+    return true
+  }
+
+  requestLoan (val) {
+    if (this.#approveLoan(val)) {
+      this.deposit(val)
+      console.log(`Loan approved`)
+    }
+  }
+
+  // Static fields/methods are not accessible on the instance, not inherited from the prototype, accessible on the class itself
+  static test () {
+    console.log('TEST')
+  }
+}
+
+const acc1 = new Account('Levan', 'EUR', 1111, [])
+console.log(acc1)
+// acc1.movements.push(250)
+// acc1.movements.push(-140)
+acc1.deposit(250)
+acc1.withdrawal(140)
+acc1.requestLoan(1000)
+
+console.log(acc1)
+console.log(acc1.pin)
+// console.log(acc1.#movements)
+console.log(acc1.getMovements())
+// acc1.#approveLoan(323)
+Account.test()
