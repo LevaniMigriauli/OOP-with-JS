@@ -335,14 +335,17 @@ class Account {
   // Public interface (API)
   getMovements () {
     return this.#movements
+    //   Not chainable
   }
 
   deposit (val) {
     this.#movements.push(val)
+    return this
   }
 
-  withdrawal (val) {
+  withdraw (val) {
     this.deposit(-val)
+    return this
   }
 
   // Internal method, needs to be accessible only for requestLoan, not outside of Account
@@ -356,6 +359,7 @@ class Account {
       this.deposit(val)
       console.log(`Loan approved`)
     }
+    return this
   }
 
   // Static fields/methods are not accessible on the instance, not inherited from the prototype, accessible on the class itself
@@ -368,13 +372,19 @@ const acc1 = new Account('Levan', 'EUR', 1111, [])
 console.log(acc1)
 // acc1.movements.push(250)
 // acc1.movements.push(-140)
-acc1.deposit(250)
-acc1.withdrawal(140)
-acc1.requestLoan(1000)
+// acc1.deposit(250)
+// acc1.withdraw(140)
+// acc1.requestLoan(1000)
+const movements = acc1.deposit(300).
+  withdraw(100).
+  withdraw(50).
+  requestLoan(25000).
+  withdraw(4000).
+  getMovements()
 
 console.log(acc1)
-console.log(acc1.pin)
 // console.log(acc1.#movements)
-console.log(acc1.getMovements())
+// console.log(acc1.getMovements())
 // acc1.#approveLoan(323)
 Account.test()
+console.log(movements)
