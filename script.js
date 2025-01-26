@@ -80,6 +80,7 @@ console.dir(x => x + 1)
 // const PersonCl = class {}
 
 // class declaration
+/*
 class PersonCl {
   constructor (fullName, birthYear) {
     this.fullName = fullName
@@ -136,7 +137,9 @@ jessica.greet()
 const walter = new PersonCl('Walter white', 1965)
 
 PersonCl.hey()
+ */
 
+/*
 const account = {
   owner: 'levan',
   movements: [200, 530, 120, 300],
@@ -204,3 +207,65 @@ console.log(mike instanceof Object)
 
 Student.prototype.constructor = Student
 console.dir(Student.prototype.constructor)
+*/
+
+class PersonCl {
+  constructor (fullName, birthYear) {
+    this.fullName = fullName
+    this.birthYear = birthYear
+  }
+
+  // Instance Methods
+  // Methods will be added to .prototype property
+  calcAge () {
+    console.log(2037 - this.birthYear)
+  }
+
+  greet () {
+    console.log(`Hey ${this.fullName}`)
+  }
+
+  get age () {
+    return 2037 - this.birthYear
+  }
+
+  // Set  property that already exists
+  set fullName (name) {
+    console.log(name)
+    if (name.includes(' ')) this._fullName = name
+    else alert(`${name} is not a full name!`)
+  }
+
+  get fullName () {
+    return this._fullName
+  }
+
+//   Static method
+  static hey () {
+    console.log('Hey there 👋')
+    console.log(this)
+  }
+}
+
+class StudentCl extends PersonCl {
+  constructor (fullName, birthYear, course) {
+    // Always needs to happen first!
+    super(fullName, birthYear)
+    this.course = course
+  }
+
+  introduce () {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`)
+  }
+
+  calcAge () {
+    console.log(`I'm ${2037 -
+    this.birthYear} years old, but as a student I feel more like ${2037 -
+    this.birthYear + 10} `)
+  }
+}
+
+const martha = new StudentCl('Martha Davis', 2012, 'Computer Science')
+martha.introduce()
+martha.calcAge()
+
